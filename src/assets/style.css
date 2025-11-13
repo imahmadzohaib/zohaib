@@ -393,13 +393,13 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .welcome-title { font-size: 2.5rem; }
-    .name-reveal { font-size: 3rem; }
+    .welcome-title { font-size: 2rem; }
+    .name-reveal { font-size: 2.5rem; }
     .birthday-title { font-size: 2.5rem; }
     .wishes-title { font-size: 2rem; }
     .rose-heart { width: 200px; height: 200px; }
     .photo-frame { width: 250px; height: 300px; }
-
+    .nav-btn1{font-size: 1.5rem;}
 }
 @media (max-width: 440px) {
     .welcome-title { font-size: 1.5rem; }
