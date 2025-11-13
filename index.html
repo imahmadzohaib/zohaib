@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="src/assets/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday</title>
+</head>
+<body>
+    <!-- PAGE 1: WELCOME -->
+    <div id="page1" class="page active">
+        <div class="welcome-content">
+            <h1 class="welcome-title">You're Invited...</h1>
+            <p class="welcome-subtitle">To a Special Celebration</p>
+            <button class="enter-btn" onclick="goToPage(2)">Surprise is Waiting 💖</button>
+        </div>
+    </div>
+    
+    <!-- PAGE 2: CELEBRATION -->
+    <div id="page2" class="page">
+        <canvas id="fireworks" class="fireworks-canvas"></canvas>
+        <div class="celebration-content">
+            <h1 class="birthday-title">🎉 Happy Birthday! 🎉</h1>
+            <div class="name-reveal">Faiza Naz</div>
+            <div class="rose-heart" id="roseHeart"></div>
+            
+            <div class="message-card">
+                <p>May your special day be filled with love, laughter, and unforgettable moments. Here's to another year of beautiful memories and dreams come true!</p>
+            </div>
+            <div class="nav-btn1">A little something special just for you</div>
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="goToPage(3)">Click to see</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- PAGE 3: WISHES -->
+    <div id="page3" class="page">
+        <div class="wishes-content">
+            <div class="photo-section">
+              <img class="photo-frame" src="src/assets/img.jpg" alt="">
+                </div>
+            </div>
+            
+            <h2 class="wishes-title">Heartfelt Wishes</h2>
+            
+            <div class="wishes-text">
+                <p>Happy birthday to the woman who turns ordinary moments into something extraordinary. 
+                  Your smile is the sunrise my heart wakes up to, your laughter the melody that colors my days, and your presence the gentle magic that makes everything feel right. Every time I see you, I’m reminded that the world is brighter, warmer, and more beautiful because you exist. Today, I celebrate not just your birthday, but the wonder, love, and light that you bring into every life you touch — especially mine</p>
+              
+            </div>
+            
+            <div class="quote">
+                "Today you are you, that is truer than true. There is no one alive who is youer than you."
+            </div>
+            
+      
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <p style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--rose-red);">Thank You for Celebrating! 💕</p>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="nav-btn" onclick="goToPage(2)">← Back to Celebration</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Progress Dots -->
+    <div class="progress-dots">
+        <span class="dot" data-page="1"></span>
+        <span class="dot" data-page="2"></span>
+        <span class="dot" data-page="3"></span>
+    </div>
+    
+    <script>
+        let currentPage = 1;
+        let fireworksActive = false;
+        let animationFrame;
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            updateProgressDots();
+            createFloatingRoses();
+            createRoseHeart();
+        });
+        
+        // Page Navigation
+        function goToPage(pageNum) {
+            document.getElementById(`page${currentPage}`).classList.remove('active');
+            currentPage = pageNum;
+            document.getElementById(`page${currentPage}`).classList.add('active');
+            updateProgressDots();
+            
+            if (pageNum === 2) {
+                startFireworks();
+                createConfetti();
+            } else {
+                stopFireworks();
+            }
+        }
+        
+        function updateProgressDots() {
+            document.querySelectorAll('.dot').forEach(dot => {
+                dot.classList.remove('active');
+                if (parseInt(dot.dataset.page) === currentPage) {
+                    dot.classList.add('active');
+                }
+            });
+        }
+        
+        // Floating Roses
+        function createFloatingRoses() {
+            setInterval(() => {
+                const rose = document.createElement('div');
+                rose.classList.add('rose');
+                rose.textContent = '🌹';
+                rose.style.left = Math.random() * 100 + '%';
+                rose.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                rose.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                document.body.appendChild(rose);
+                
+                setTimeout(() => rose.remove(), 8000);
+            }, 800);
+        }
+        
+        // Rose Heart
+        function createRoseHeart() {
+            const heart = document.getElementById('roseHeart');
+            const heartPoints = [
+                {x: 150, y: 60}, {x: 180, y: 40}, {x: 210, y: 35}, {x: 235, y: 50},
+                {x: 250, y: 75}, {x: 255, y: 105}, {x: 245, y: 135}, {x: 220, y: 165},
+                {x: 190, y: 190}, {x: 160, y: 215}, {x: 150, y: 230}, {x: 140, y: 215},
+                {x: 110, y: 190}, {x: 80, y: 165}, {x: 55, y: 135}, {x: 45, y: 105},
+                {x: 50, y: 75}, {x: 65, y: 50}, {x: 90, y: 35}, {x: 120, y: 40}
+            ];
+            
+            // heartPoints.forEach((point, i) => {
+            //     const rose = document.createElement('div');
+            //     rose.classList.add('heart-rose');
+            //     rose.textContent = '🌹';
+            //     rose.style.left = point.x + 'px';
+            //     rose.style.top = point.y + 'px';
+            //     heart.appendChild(rose);
+            // });
+        }
+        
+        // Confetti
+        function createConfetti() {
+            const colors = ['#ff6b9d', '#ffd700', '#8b5cf6', '#ffc0cb', '#c21e56'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animation = `confettiFall ${Math.random() * 2 + 3}s linear forwards`;
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 50);
+            }
+        }
+        
+        // Fireworks
+        function startFireworks() {
+            if (fireworksActive) return;
+            fireworksActive = true;
+            
+            const canvas = document.getElementById('fireworks');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const fireworks = [];
+            const particles = [];
+            
+            class Firework {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = canvas.height;
+                    this.targetY = Math.random() * canvas.height * 0.5;
+                    this.speed = 3;
+                    this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+                }
+                
+                update() {
+                    this.y -= this.speed;
+                    return this.y > this.targetY;
+                }
+                
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+            }
+            
+            class Particle {
+                constructor(x, y, color) {
+                    this.x = x;
+                    this.y = y;
+                    this.color = color;
+                    this.velocity = {
+                        x: (Math.random() - 0.5) * 6,
+                        y: (Math.random() - 0.5) * 6
+                    };
+                    this.alpha = 1;
+                    this.decay = Math.random() * 0.02 + 0.01;
+                }
+                
+                update() {
+                    this.velocity.y += 0.1;
+                    this.x += this.velocity.x;
+                    this.y += this.velocity.y;
+                    this.alpha -= this.decay;
+                    return this.alpha > 0;
+                }
+                
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.alpha;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+            
+            function animate() {
+                if (!fireworksActive) return;
+                
+                ctx.fillStyle = 'rgba(26, 26, 46, 0.1)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                if (Math.random() < 0.05) {
+                    fireworks.push(new Firework());
+                }
+                
+                for (let i = fireworks.length - 1; i >= 0; i--) {
+                    const fw = fireworks[i];
+                    fw.draw();
+                    if (!fw.update()) {
+                        for (let j = 0; j < 40; j++) {
+                            particles.push(new Particle(fw.x, fw.y, fw.color));
+                        }
+                        fireworks.splice(i, 1);
+                    }
+                }
+                
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    p.draw();
+                    if (!p.update()) {
+                        particles.splice(i, 1);
+                    }
+                }
+                
+                animationFrame = requestAnimationFrame(animate);
+            }
+            
+            animate();
+        }
+        
+        function stopFireworks() {
+            fireworksActive = false;
+            if (animationFrame) {
+                cancelAnimationFrame(animationFrame);
+            }
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' && currentPage < 3) {
+                goToPage(currentPage + 1);
+            } else if (e.key === 'ArrowLeft' && currentPage > 1) {
+                goToPage(currentPage - 1);
+            }
+        });
+        
+        // Resize handler
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('fireworks');
+            if (canvas) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+        });
+    </script>
+</body>
+</html>
